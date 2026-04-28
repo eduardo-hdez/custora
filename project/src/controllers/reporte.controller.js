@@ -29,8 +29,6 @@ export async function renderReporte(request, response) {
       fetchTopProductosCalificados(5)
     ]);
 
-    console.log('Controller - mejoresProductos:', mejoresProductos ? mejoresProductos.length : 'undefined');
-
     const sinReservas = topConcesionarias.length === 0 && (demanda.productosMasSolicitados?.length === 0);
 
     const renderData = {
