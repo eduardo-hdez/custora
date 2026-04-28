@@ -96,20 +96,6 @@
                   </button>
                 </form>
 
-                <% if (puedeCalificar) { %>
-                  <a
-                    href="/cliente/productos/<%= producto.id_producto %>/calificacion"
-                    class="w-full bg-white hover:bg-gray-50 text-[#2B6398] border border-[#2B6398] rounded-full py-3 px-6 font-medium flex justify-center items-center gap-2 text-lg transition-colors"
-                  >
-                    <span class="material-icons">rate_review</span>
-                    Agregar reseña
-                  </a>
-                <% } else { %>
-                  <div class="w-full bg-gray-100 text-gray-600 border border-gray-300 rounded-full py-3 px-6 font-medium flex justify-center items-center gap-2 text-lg cursor-not-allowed">
-                    <span class="material-icons">rate_review</span>
-                    Ya calificaste este producto
-                  </div>
-                <% } %>
             </div>
           </div>
         </div>
@@ -146,6 +132,22 @@
           <span class="text-sm text-gray-700">
             <%= totalResenasListado > 0 ? `${promedioResenasListado.toFixed(1)} de 5 (${totalResenasListado} reseñas)` : 'Aún no hay reseñas' %>
           </span>
+        </div>
+        <div class="mb-5">
+          <% if (puedeCalificar) { %>
+            <a
+              href="/cliente/productos/<%= producto.id_producto %>/calificacion"
+              class="w-full sm:w-auto inline-flex bg-white hover:bg-gray-50 text-[#2B6398] border border-[#2B6398] rounded-full py-2.5 px-6 font-medium items-center gap-2 text-base transition-colors"
+            >
+              <span class="material-icons">rate_review</span>
+              Agregar reseña
+            </a>
+          <% } else { %>
+            <div class="w-full sm:w-auto inline-flex bg-gray-100 text-gray-600 border border-gray-300 rounded-full py-2.5 px-6 font-medium items-center gap-2 text-base cursor-not-allowed">
+              <span class="material-icons">rate_review</span>
+              Ya calificaste este producto
+            </div>
+          <% } %>
         </div>
 
         <% if (errorResenas) { %>
