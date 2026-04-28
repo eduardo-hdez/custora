@@ -1,0 +1,18 @@
+<section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <div>
+      <h2 class="text-base font-semibold text-gray-900">Comparativa de Productos Solicitados</h2>
+      <p class="text-xs text-gray-500 mt-0.5">Productos más solicitados (arriba) y menos solicitados (abajo)</p>
+    </div>
+    <span class="material-icons text-[#2B6398] text-2xl">stacked_bar_chart</span>
+  </div>
+
+  <canvas
+    id="chartComparativaProductos"
+    height="100"
+    data-chart='<%- JSON.stringify({
+      productosMasSolicitados: productosMasSolicitados || [],
+      productosMenosSolicitados: productosMenosSolicitados || []
+    }) %>'>
+  </canvas>
+</section>
