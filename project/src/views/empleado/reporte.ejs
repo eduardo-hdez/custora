@@ -8,48 +8,58 @@
 <body class="bg-gray-50 flex flex-col min-h-screen">
   <%- include('../partials/navbar-empleado') %>
 
-    <main  id="dashboard-content" class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+    <main id="dashboard-content" class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
 
-      
+
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h1 class="text-2xl font-bold text-gray-900">Reporte de Reservas</h1>
-      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3">
 
-        <button id="btn-export" class="bg-[#2B6398] hover:bg-[#1f496e] text-white text-sm font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200 cursor-pointer">
-          <span class="material-icons text-base">download</span>
-           <span id="btn-export-text">Exportar</span>
-        </button>
+          <button id="btn-export"
+            class="bg-[#2B6398] hover:bg-[#1f496e] text-white text-sm font-semibold px-4 py-2 rounded-lg flex items-center gap-2 transition-colors duration-200 cursor-pointer">
+            <span class="material-icons text-base">download</span>
+            <span id="btn-export-text">Exportar</span>
+          </button>
 
-        <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-md border border-gray-200 shadow-sm">
-          Ultima actualizacion:
-          <span class="font-medium text-gray-900">
-            <%= new Date(fechaActualizacion).toLocaleString('es-MX') %>
-          </span>
+          <div class="text-sm text-gray-500 bg-white px-4 py-2 rounded-md border border-gray-200 shadow-sm">
+            Ultima actualizacion:
+            <span class="font-medium text-gray-900">
+              <%= new Date(fechaActualizacion).toLocaleString('es-MX') %>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
 
       <% if (errorReporte) { %>
         <div class="bg-red-50 border border-red-200 text-red-700 rounded-lg p-4 mb-6 flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p class="font-medium"><%= errorReporte %></p>
+          <p class="font-medium">
+            <%= errorReporte %>
+          </p>
         </div>
-      <% } else if (infoReporte) { %>
-        <div class="bg-blue-50 border border-blue-200 text-blue-700 rounded-lg p-4 mb-6 flex items-center gap-3">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <p class="font-medium"><%= infoReporte %></p>
-        </div>
-        <% } %>
+        <% } else if (infoReporte) { %>
+          <div class="bg-blue-50 border border-blue-200 text-blue-700 rounded-lg p-4 mb-6 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="font-medium">
+              <%= infoReporte %>
+            </p>
+          </div>
+          <% } %>
 
-          <%- include('./graficas/grid-metricas') %>
-            <%- include('./graficas/demanda-productos') %>
-              <%- include('./graficas/top-concesionarias') %>
-                <%- include('./graficas/promedio-reservas-semana') %>
-                 <%- include('./graficas/reservas-por-hora') %>
+            <%- include('./graficas/grid-metricas') %>
+              <%- include('./graficas/demanda-productos') %>
+                <%- include('./graficas/productos-favoritos') %>
+                  <%- include('./graficas/top-concesionarias') %>
+                    <%- include('./graficas/promedio-reservas-semana') %>
+                      <%- include('./graficas/reservas-por-hora') %>
 
     </main>
 

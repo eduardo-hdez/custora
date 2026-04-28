@@ -5,8 +5,9 @@ import {
   fetchPromedioIngresosDiarios,
   fetchSingleTopConcesionaria,
   fetchSingleTopSucursal,
-  fetchPromedioReservasPorDia, 
+  fetchPromedioReservasPorDia,
   fetchReservasPorHora,
+  fetchTopProductosCalificados,
 } from '../models/reporte.model.js';
 
 export async function renderReporte(request, response) {
@@ -16,7 +17,7 @@ export async function renderReporte(request, response) {
   };
 
   try {
-    const [demanda, topConcesionarias, ingresosHoy, promedioIngresosDiarios, singleTopConcesionaria, singleTopSucursal,promedioReservasPorDia,reservasPorHora] = await Promise.all([
+    const [demanda, topConcesionarias, ingresosHoy, promedioIngresosDiarios, singleTopConcesionaria, singleTopSucursal, promedioReservasPorDia, reservasPorHora, mejoresProductos] = await Promise.all([
       fetchDemandaProductosRanking(3),
       fetchTopConcesionariasRanking(5),
       fetchIngresosHoy(),
@@ -24,12 +25,15 @@ export async function renderReporte(request, response) {
       fetchSingleTopConcesionaria(),
       fetchSingleTopSucursal(),
       fetchPromedioReservasPorDia(),
-      fetchReservasPorHora() 
+      fetchReservasPorHora(),
+      fetchTopProductosCalificados(5)
     ]);
 
-    const sinReservas = topConcesionarias.length === 0 && demanda.productosMasSolicitados.length === 0;
+    console.log('Controller - mejoresProductos:', mejoresProductos ? mejoresProductos.length : 'undefined');
 
-    return response.render('empleado/reporte', {
+    const sinReservas = topConcesionarias.length === 0 && (demanda.productosMasSolicitados?.length === 0);
+
+    const renderData = {
       ...base,
       errorReporte: null,
       infoReporte: sinReservas ? 'Actualmente no existen reservas en la campaña seleccionada. Las métricas se actualizarán cuando se registren nuevas reservas.' : null,
@@ -40,8 +44,11 @@ export async function renderReporte(request, response) {
       singleTopConcesionaria,
       singleTopSucursal,
       promedioReservasPorDia,
-      reservasPorHora
-    });
+      reservasPorHora,
+      mejoresProductos: mejoresProductos || []
+    };
+
+    return response.render('empleado/reporte', renderData);
   } catch (error) {
     console.error('[reporte] Error al generar el reporte:', error);
 
@@ -52,12 +59,13 @@ export async function renderReporte(request, response) {
       productosMasSolicitados: [],
       productosMenosSolicitados: [],
       topConcesionarias: [],
-      ingresosHoy: [],
-      promedioIngresosDiarios: [],
-      singleTopConcesionaria: [],
-      singleTopSucursal: [],
+      ingresosHoy: 0,
+      promedioIngresosDiarios: 0,
+      singleTopConcesionaria: {},
+      singleTopSucursal: {},
       promedioReservasPorDia: [],
       reservasPorHora: [],
+      mejoresProductos: [],
     });
   }
 }

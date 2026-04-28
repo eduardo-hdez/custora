@@ -81,7 +81,7 @@ export async function fetchSingleTopConcesionaria() {
 
   if (error) throw error;
 
-  return data?.[0] ?? 0;
+  return data?.[0] ?? {};
 }
 
 export async function fetchSingleTopSucursal() {
@@ -89,7 +89,7 @@ export async function fetchSingleTopSucursal() {
 
   if (error) throw error;
 
-  return data?.[0] ?? 0;
+  return data?.[0] ?? {};
 }
 
 export async function fetchPromedioReservasPorDia() {
@@ -129,4 +129,37 @@ export async function fetchReservasPorHora() {
     hora: `${String(h).padStart(2, '0')}:00`,
     total: Number(mapa.get(h)?.total_reservas) || 0,
   }));
+}
+
+export async function fetchTopProductosCalificados(limite = 5) {
+  const { data, error } = await supabase
+    .from('calificar')
+    .select('id_producto, puntuacion, producto(nombre_producto, foto_producto)');
+
+  if (error) throw error;
+
+  const mapa = new Map();
+  for (const r of data) {
+    const id = r.id_producto;
+    if (!id) continue;
+
+    const puntuacion = Number(r.puntuacion) || 0;
+    const info = mapa.get(id) || {
+      nombre: r.producto?.nombre_producto || 'N/D',
+      foto: r.producto?.foto_producto,
+      suma: 0,
+      conteo: 0
+    };
+    info.suma += puntuacion;
+    info.conteo += 1;
+    mapa.set(id, info);
+  }
+
+  return Array.from(mapa.values())
+    .map(item => ({
+      ...item,
+      promedio: item.conteo > 0 ? (item.suma / item.conteo) : 0
+    }))
+    .sort((a, b) => b.promedio - a.promedio || b.conteo - a.conteo)
+    .slice(0, limite);
 }
