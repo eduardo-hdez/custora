@@ -134,6 +134,7 @@
                               <p class="text-sm text-gray-600 mb-2 line-clamp-2">
                                 <%= producto.descripcion_producto || 'Sin descripcion disponible.' %>
                               </p>
+                <% const urlResenas = urlDetalle ? `${urlDetalle}#resenas-producto` : null; %>
                 <div class="flex items-center gap-1 mb-2">
                   <span class="inline-flex items-center text-amber-400 leading-none">
                     <% for (let i = 0; i < estrellasCompletas; i += 1) { %>
@@ -146,9 +147,9 @@
                       <span class="material-icons text-[16px] text-gray-300">star_border</span>
                     <% } %>
                   </span>
-                  <span class="text-xs text-gray-600">
+                  <a href="<%= urlResenas || '#' %>" class="text-xs text-gray-600 hover:text-[#007185] hover:underline transition-colors<%= urlResenas ? '' : ' pointer-events-none text-gray-400' %>">
                     <%= totalResenas > 0 ? `${promedioPuntuacion.toFixed(1)} (${totalResenas} reseñas)` : 'Sin reseñas' %>
-                  </span>
+                  </a>
                 </div>
 
                 <div class="mt-auto">
