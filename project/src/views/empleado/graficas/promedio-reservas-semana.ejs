@@ -6,57 +6,8 @@
     </div>
     <span class="material-icons text-[#2B6398] text-2xl">bar_chart</span>
   </div>
-  <canvas id="chartPromedioSemana" height="100"></canvas>
+  <canvas id="chartPromedioSemana" height="100"
+    data-chart='<%- JSON.stringify(promedioReservasPorDia || []) %>'></canvas>
+    <script src="/js/chart-promedio-reservas-semana.js"></script>
+
 </div>
-
-<script>
-  (function () {
-    const datos = <%- JSON.stringify(promedioReservasPorDia || []) %>;
-    const labels = datos.map(function(d) { return d.nombreDia; });
-    const valores = datos.map(function(d) { return d.promedio; });
-    const max = Math.max.apply(null, valores);
-
-    const ctx = document.getElementById('chartPromedioSemana').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Promedio de reservas',
-          data: valores,
-          backgroundColor: valores.map(function(v) {
-            return v === max ? '#2B6398' : '#93C5E8';
-          }),
-          borderRadius: 6,
-          borderSkipped: false,
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: function(ctx) { return ' ' + ctx.parsed.y.toFixed(1) + ' reservas'; }
-            }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: { color: '#F3F4F6' },
-            ticks: {
-              color: '#6B7280',
-              font: { size: 12 },
-              callback: function(v) { return Number.isInteger(v) ? v : ''; }
-            }
-          },
-          x: {
-            grid: { display: false },
-            ticks: { color: '#374151', font: { size: 13, weight: '500' } }
-          }
-        }
-      }
-    });
-  })();
-</script>
