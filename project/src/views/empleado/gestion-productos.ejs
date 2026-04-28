@@ -153,6 +153,11 @@
                           Los productos del archivo CSV se cargaron exitosamente al catálogo.
                         </div>
                         <% } %>
+                      <% if (success==='editar' ) { %>
+                        <div class="mb-4 rounded-md bg-green-100 border border-green-400 text-green-700 px-4 py-3">
+                          Producto actualizado exitosamente.
+                        </div>
+                        <% } %>
                           <!-- Barra de Filtros y Búsqueda -->
                           <div
                             class="bg-white p-4 rounded-lg border border-gray-200 mb-6 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
@@ -258,7 +263,7 @@
                                             </td>
                                             <td class="p-4">
                                               <div class="flex items-center justify-center gap-2">
-                                                <a href="/empleado/producto/editar/<%= producto.id_producto %>"
+                                                <a href="/empleado/producto/editar/<%= producto.id_producto %>?origen=gestion"
                                                   class="text-[#007185] hover:text-[#005d6e] hover:bg-teal-50 p-1.5 rounded-full transition-colors"
                                                   title="Editar producto">
                                                   <span class="material-icons text-[20px]">edit</span>

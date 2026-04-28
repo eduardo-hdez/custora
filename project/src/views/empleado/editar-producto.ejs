@@ -47,6 +47,7 @@
           enctype="multipart/form-data"
           class="bg-white p-6 md:p-8 rounded-lg border border-gray-200 shadow-sm">
           <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+          <input type="hidden" name="origen" value="<%= origen %>">
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <!-- Id Producto (solo lectura) -->
@@ -153,12 +154,21 @@
 
           <!-- Botones -->
           <div id="toAccept" class="flex flex-col sm:flex-row gap-3 justify-end pt-5 border-t border-gray-200">
-            <a href="/empleado/catalogo">
-              <button type="button"
-                class="w-full sm:w-auto px-6 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-md transition-colors shadow-sm">
-                Regresar a Catálogo
-              </button>
-            </a>
+            <% if (origen === 'gestion') { %>
+              <a href="/empleado/gestion-productos">
+                <button type="button"
+                  class="w-full sm:w-auto px-6 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-md transition-colors shadow-sm">
+                  Regresar a Gestión
+                </button>
+              </a>
+            <% } else { %>
+              <a href="/empleado/catalogo">
+                <button type="button"
+                  class="w-full sm:w-auto px-6 py-2 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium rounded-md transition-colors shadow-sm">
+                  Regresar a Catálogo
+                </button>
+              </a>
+            <% } %>
             <button type="button" id="btnGuardarCambios"
               class="w-full sm:w-auto px-6 py-2 bg-[#007185] hover:bg-[#005d6e] text-white font-medium rounded-md transition-colors shadow-sm">
               Guardar cambios

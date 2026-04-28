@@ -684,12 +684,15 @@ export async function getEditarProducto(request, response) {
       delete request.session[SESSION_EDITAR_PRODUCTO_ERROR];
     }
 
+    const origen = request.query.origen || 'catalogo';
+
     return response.render('empleado/editar-producto', {
       title: 'Editar producto',
       campanas,
       idCampanaActiva,
       errorMessage: errorSession,
       success: null,
+      origen,
       producto: {
         idProducto: producto.id,
         nombreProducto: producto.nombre,
@@ -710,7 +713,7 @@ export async function getEditarProducto(request, response) {
 
 export async function postEditarProducto(request, response) {
   try {
-    const { idProducto, nombreProducto, descripcion, precio, pesoUnidad, unidadVenta, idCampana, habilitado } = request.body;
+    const { idProducto, nombreProducto, descripcion, precio, pesoUnidad, unidadVenta, idCampana, habilitado, origen } = request.body;
 
     let fotoUrl = null;
 
@@ -736,10 +739,14 @@ export async function postEditarProducto(request, response) {
       foto: fotoUrl, // null si no se subió nueva → COALESCE en el RPC conserva la anterior
     });
 
-    return response.redirect(`/empleado/catalogo?success=editar`);
+    if (origen === 'gestion') {
+      return response.redirect(`/empleado/gestion-productos?success=editar`);
+    } else {
+      return response.redirect(`/empleado/catalogo?success=editar`);
+    }
 
   } catch (error) {
     request.session[SESSION_EDITAR_PRODUCTO_ERROR] = 'Lo siento, ocurrió un error al guardar los cambios. Por favor intenta de nuevo.';
-    return response.redirect(`/empleado/producto/editar/${request.body.idProducto}`);
+    return response.redirect(`/empleado/producto/editar/${request.body.idProducto}?origen=${request.body.origen || 'catalogo'}`);
   }
 }
