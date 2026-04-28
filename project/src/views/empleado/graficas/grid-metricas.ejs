@@ -10,7 +10,7 @@
                         <% } else { %>
                             <p class="text-sm font-semibold text-blue-800 uppercase">Ingresos de Hoy</p>
                             <p class="text-3xl font-bold text-gray-900 mt-2">
-                                $<%= Number(ingresosHoy).toLocaleString('es-MX') %>
+                                $<%= Number(ingresosHoy).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                             </p>
                             <p class="text-sm text-gray-500 mt-1">En reservas confirmadas</p>
                             <% } %>
@@ -32,7 +32,7 @@
                 <div>
                     <p class="text-sm font-semibold text-blue-800 uppercase">Promedio de ingresos diarios</p>
                     <p class="text-3xl font-bold text-gray-900 mt-2">$<%=
-                            Number(promedioIngresosDiarios).toLocaleString('es-MX') %>
+                            Number(promedioIngresosDiarios).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                     </p>
                     <p class="text-sm text-gray-500 mt-1">Última semana</p>
                 </div>
