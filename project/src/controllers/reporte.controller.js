@@ -8,6 +8,10 @@ import {
   fetchPromedioReservasPorDia,
   fetchReservasPorHora,
   fetchTopProductosCalificados,
+  fetchPesoAcumulado,
+  fetchReservasPorSucursal,
+  fetchProductosPorSucursal,
+  fetchIngresosPorSemana
 } from '../models/reporte.model.js';
 
 export async function renderReporte(request, response) {
@@ -17,7 +21,8 @@ export async function renderReporte(request, response) {
   };
 
   try {
-    const [demanda, topConcesionarias, ingresosHoy, promedioIngresosDiarios, singleTopConcesionaria, singleTopSucursal, promedioReservasPorDia, reservasPorHora, mejoresProductos] = await Promise.all([
+    const [demanda, topConcesionarias, ingresosHoy, promedioIngresosDiarios, singleTopConcesionaria, singleTopSucursal, promedioReservasPorDia, reservasPorHora, mejoresProductos,pesoAcumulado,
+      reservasPorSucursal,productosPorSucursal,ingresosPorSemana] = await Promise.all([
       fetchDemandaProductosRanking(3),
       fetchTopConcesionariasRanking(5),
       fetchIngresosHoy(),
@@ -26,7 +31,11 @@ export async function renderReporte(request, response) {
       fetchSingleTopSucursal(),
       fetchPromedioReservasPorDia(),
       fetchReservasPorHora(),
-      fetchTopProductosCalificados(5)
+      fetchTopProductosCalificados(5),
+      fetchPesoAcumulado(),
+      fetchReservasPorSucursal(),
+      fetchProductosPorSucursal(),
+      fetchIngresosPorSemana(),
     ]);
 
     const sinReservas = topConcesionarias.length === 0 && (demanda.productosMasSolicitados?.length === 0);
@@ -43,6 +52,10 @@ export async function renderReporte(request, response) {
       singleTopSucursal,
       promedioReservasPorDia,
       reservasPorHora,
+      pesoAcumulado,
+      reservasPorSucursal,
+      productosPorSucursal,
+      ingresosPorSemana,
       mejoresProductos: mejoresProductos || []
     };
 
@@ -64,6 +77,10 @@ export async function renderReporte(request, response) {
       promedioReservasPorDia: [],
       reservasPorHora: [],
       mejoresProductos: [],
+      pesoAcumulado: 0,
+      reservasPorSucursal:[],
+      productosPorSucursal:[],
+      ingresosPorSemana: []
     });
   }
 }

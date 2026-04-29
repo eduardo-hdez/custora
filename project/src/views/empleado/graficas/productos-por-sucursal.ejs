@@ -1,0 +1,35 @@
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <div>
+      <h2 class="text-base font-semibold text-gray-900">Productos más reservados por Sucursal</h2>
+      <p class="text-xs text-gray-500 mt-0.5">Selecciona una concesionaria y sucursal para ver su top de productos</p>
+    </div>
+    <span class="material-icons text-[#2B6398] text-2xl">store</span>
+  </div>
+
+  <!-- Filtros -->
+  <div class="flex flex-col sm:flex-row gap-3 mb-6">
+    <select id="selectConcesionaria"
+      class="flex-1 border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-[#2B6398] focus:border-[#2B6398]">
+      <option value="">Selecciona una concesionaria</option>
+    </select>
+    <select id="selectSucursal" disabled
+      class="flex-1 border border-gray-300 rounded-lg py-2 px-3 text-sm focus:ring-[#2B6398] focus:border-[#2B6398] disabled:opacity-50">
+      <option value="">Primero selecciona una concesionaria</option>
+    </select>
+  </div>
+
+  <!-- Resultado -->
+  <div id="resultadoProductosSucursal" class="hidden">
+    <canvas id="chartProductosSucursal" height="120"
+      class="w-full"></canvas>
+  </div>
+  <div id="sinDatosSucursal" class="hidden text-center text-gray-500 text-sm py-6">
+    Esta sucursal no tiene reservas registradas.
+  </div>
+
+  <div
+    data-productos='<%- JSON.stringify(productosPorSucursal || []) %>'
+    id="datosProductosSucursal">
+  </div>
+</div>

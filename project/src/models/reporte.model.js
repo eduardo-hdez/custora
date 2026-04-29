@@ -163,3 +163,33 @@ export async function fetchTopProductosCalificados(limite = 5) {
     .sort((a, b) => b.promedio - a.promedio || b.conteo - a.conteo)
     .slice(0, limite);
 }
+
+export async function fetchPesoAcumulado() {
+  const { data, error } = await supabase.rpc('get_peso_acumulado_campana');
+  if (error) throw error;
+  return Number(data?.[0]?.peso_total) || 0;
+}
+
+export async function fetchReservasPorSucursal() {
+  const { data, error } = await supabase.rpc('get_reservas_por_sucursal');
+  if (error) throw error;
+  return (data || []).map(d => ({
+    nombreSucursal: d.nombre_sucursal,
+    totalReservas: Number(d.total_reservas) || 0,
+  }));
+}
+
+export async function fetchProductosPorSucursal() {
+  const { data, error } = await supabase.rpc('get_productos_por_sucursal');
+  if (error) throw error;
+  return data || [];
+}
+
+export async function fetchIngresosPorSemana() {
+  const { data, error } = await supabase.rpc('get_ingresos_por_semana');
+  if (error) throw error;
+  return (data || []).map(d => ({
+    semana: d.semana,
+    ingresos: Number(d.ingresos) || 0,
+  }));
+}

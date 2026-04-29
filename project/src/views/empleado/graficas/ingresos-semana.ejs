@@ -1,0 +1,11 @@
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+  <div class="flex items-center justify-between mb-4">
+    <div>
+      <h2 class="text-base font-semibold text-gray-900">Ingresos Acumulados por Semana</h2>
+      <p class="text-xs text-gray-500 mt-0.5">Ingresos totales con IVA por semana durante la campaña</p>
+    </div>
+    <span class="material-icons text-[#2B6398] text-2xl">trending_up</span>
+  </div>
+  <canvas id="chartIngresosSemana" height="100"
+    data-chart='<%- JSON.stringify(ingresosPorSemana || []) %>'></canvas>
+</div>
