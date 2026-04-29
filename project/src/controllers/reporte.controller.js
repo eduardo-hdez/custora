@@ -11,7 +11,8 @@ import {
   fetchPesoAcumulado,
   fetchReservasPorSucursal,
   fetchProductosPorSucursal,
-  fetchIngresosPorSemana
+  fetchIngresosPorSemana,
+  fetchTasaCancelacion,
 } from '../models/reporte.model.js';
 
 export async function renderReporte(request, response) {
@@ -22,7 +23,7 @@ export async function renderReporte(request, response) {
 
   try {
     const [demanda, topConcesionarias, ingresosHoy, promedioIngresosDiarios, singleTopConcesionaria, singleTopSucursal, promedioReservasPorDia, reservasPorHora, mejoresProductos,pesoAcumulado,
-      reservasPorSucursal,productosPorSucursal,ingresosPorSemana] = await Promise.all([
+      reservasPorSucursal,productosPorSucursal,ingresosPorSemana, tasaCancelacion] = await Promise.all([
       fetchDemandaProductosRanking(3),
       fetchTopConcesionariasRanking(5),
       fetchIngresosHoy(),
@@ -36,6 +37,7 @@ export async function renderReporte(request, response) {
       fetchReservasPorSucursal(),
       fetchProductosPorSucursal(),
       fetchIngresosPorSemana(),
+      fetchTasaCancelacion(),
     ]);
 
     const sinReservas = topConcesionarias.length === 0 && (demanda.productosMasSolicitados?.length === 0);
@@ -56,6 +58,7 @@ export async function renderReporte(request, response) {
       reservasPorSucursal,
       productosPorSucursal,
       ingresosPorSemana,
+      tasaCancelacion,
       mejoresProductos: mejoresProductos || []
     };
 
@@ -80,7 +83,8 @@ export async function renderReporte(request, response) {
       pesoAcumulado: 0,
       reservasPorSucursal:[],
       productosPorSucursal:[],
-      ingresosPorSemana: []
+      ingresosPorSemana: [],
+      tasaCancelacion: { total_reservas: 0, canceladas: 0, activas: 0, tasa_cancelacion: 0 },
     });
   }
 }

@@ -193,3 +193,8 @@ export async function fetchIngresosPorSemana() {
     ingresos: Number(d.ingresos) || 0,
   }));
 }
+export async function fetchTasaCancelacion() {
+  const { data, error } = await supabase.rpc('get_tasa_cancelacion');
+  if (error) throw error;
+  return data?.[0] ?? { total_reservas: 0, canceladas: 0, activas: 0, tasa_cancelacion: 0 };
+}
