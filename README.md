@@ -32,3 +32,10 @@ El sistema permite gestionar un catalogo de productos, crear y cancelar reservas
 - Configurar variables de entorno:
   - `RESEND_API_KEY`
 - Verificar dominio y remitente en Resend para produccion (evitar usar `onboarding@resend.dev`).
+
+## Desarrollado por:
+
+- Ana Sofia Moreno Hernández (`AnaSofiaMorenoA01707156`)
+- Ana Valeria Machuca Miranda (`AnaMachu`)
+- David Antonio Gandara Ruiz (`DAVGAN513`)
+- Eduardo Hernández Alonso (`eduardo-hdez`)
